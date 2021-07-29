@@ -1,0 +1,23 @@
+{
+  "name": "Kasper_Simons-TDD-Groentetuin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MoodswingKS/Kasper_Simons-TDD-Groentetuin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MoodswingKS/Kasper_Simons-TDD-Groentetuin/issues"
+  },
+  "homepage": "https://github.com/MoodswingKS/Kasper_Simons-TDD-Groentetuin#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
