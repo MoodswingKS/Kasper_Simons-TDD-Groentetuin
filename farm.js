@@ -1,14 +1,46 @@
 
 
 const getYieldForPlant = (crop, environmentFactors) => {
-    if (!environmentFactors || !crop.factors) {
+    if (!environmentFactors || (environmentFactors.sun === "medium" || environmentFactors.wind === "medium")) {
         return crop.yield;
     }
 
-    if (environmentFactors.sun === "low") {
-        return crop.yield * 0.5;
-    } else if (environmentFactors.sun === "high") {
-        return crop.yield * 1.5;
+    if (environmentFactors.sun && environmentFactors.wind) {
+        if (environmentFactors.sun) {
+            if (environmentFactors.sun === "low") {
+                modifierSun = crop.factors.sun.low
+            } else if (environmentFactors.sun === "high") {
+                modifierSun = crop.factors.sun.high
+            }
+        }
+    
+        if (environmentFactors.wind) {
+            if (environmentFactors.wind === "low") {
+                modifierWind = crop.factors.wind.low
+            } else if (environmentFactors.wind === "high") {
+                modifierWind = crop.factors.wind.high
+            }
+        }
+
+        return ((crop.yield * modifierSun) / 100) + ((crop.yield * modifierWind) / 100) + crop.yield;
+    }
+
+    if (environmentFactors.sun) {
+        if (environmentFactors.sun === "low") {
+            modifier = crop.factors.sun.low
+        } else if (environmentFactors.sun === "high") {
+            modifier = crop.factors.sun.high
+        }
+        return ((crop.yield * modifier) / 100) + crop.yield;
+    }
+
+    if (environmentFactors.wind) {
+        if (environmentFactors.wind === "low") {
+            modifier = crop.factors.wind.low
+        } else if (environmentFactors.wind === "high") {
+            modifier = crop.factors.wind.high
+        }
+        return ((crop.yield * modifier) / 100) + crop.yield;
     }
 
 };

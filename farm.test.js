@@ -178,11 +178,62 @@ describe("getYieldForPlant", () => {
         },
     };
 
-    test("Get yield for plant with 'low' sun", () => {
+    const apples = {
+        name: "apple",
+        yield: 20,
+        factors: {
+            wind: {
+                low: -20,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };  
+
+    const tomato = {
+        name: "tomato",
+        yield: 10,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: -20,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };  
+
+    test("Get yield for corn with 'low' sun", () => {
         const environmentFactors = {
             sun: "low",
         };
+
+        // 30 * 0.5 = 15
         expect(getYieldForPlant(corn, environmentFactors)).toBe(15);
+    })
+
+    test("Get yield for apples with 'high' wind", () => {
+        const environmentFactors = {
+            wind: "high",
+        };
+
+        // 20 * 1.5 = 30
+        expect(getYieldForPlant(apples, environmentFactors)).toBe(30);
+    })
+
+    
+    test("Get yield for tomato with 'high' sun and 'low' wind", () => {
+        const environmentFactors = {
+            sun: "high",
+            wind: "low",
+        };
+
+        // (10 * 0.5 =) 5 + (10 * -0.2 =) 8 = 13
+        expect(getYieldForPlant(tomato, environmentFactors)).toBe(13);
     })
 });
 
