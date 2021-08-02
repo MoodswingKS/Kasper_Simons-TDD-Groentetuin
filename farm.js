@@ -13,7 +13,7 @@ const getYieldForPlant = (crop, environmentFactors) => {
                 modifierSun = crop.factors.sun.high
             }
         }
-    
+
         if (environmentFactors.wind) {
             if (environmentFactors.wind === "low") {
                 modifierWind = crop.factors.wind.low
@@ -45,7 +45,13 @@ const getYieldForPlant = (crop, environmentFactors) => {
 
 };
 
-const getYieldForCrop = (input) => input.numCrops * input.crop.yield;
+const getYieldForCrop = (input, environmentFactors) => {
+    if (!environmentFactors || input.numCrops === 0) {
+        return input.numCrops * input.crop.yield;
+    }
+    
+    return input.numCrops * getYieldForPlant(input.crop, environmentFactors);
+}
 
 const getTotalYield = ({ crops }) => {
     const arrayYield = crops.map(c => getYieldForCrop(c));

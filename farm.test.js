@@ -165,7 +165,7 @@ describe("getTotalProfit", () => {
 
 // deel 3
 
-describe("getYieldForPlant", () => {
+describe("getYieldForPlant with environment factors", () => {
     const corn = {
         name: "corn",
         yield: 30,
@@ -237,4 +237,73 @@ describe("getYieldForPlant", () => {
     })
 });
 
+describe("getYieldForCrop with environment factors", () => {
+    const apples = {
+        name: "apple",
+        yield: 20,
+        factors: {
+            wind: {
+                low: -20,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };  
+
+    const tomato = {
+        name: "tomato",
+        yield: 20,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            wind: {
+                low: -20,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };  
+
+    test("Get yield for crop, with high wind", () => {
+        const input = {
+            crop: apples,
+            numCrops: 10,
+        };
+
+        const environmentFactors = {
+            wind: "high",
+        };
+        
+        expect(getYieldForCrop(input, environmentFactors)).toBe(300);
+    });
+
+
+    test("Get yield for tomato with 'low' sun", () => {
+        const input = {
+            crop: tomato,
+            numCrops: 5,
+        };
+        const environmentFactors = {
+            sun: "low",
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(50);
+    });
+
+    
+    test("calculate crop cost, with 0 amount", () => {
+        const input = {
+            crop: apples,
+            numCrops: 0,
+        };
+        const environmentFactors = {
+            wind: "low",
+        };
+
+        expect(getYieldForCrop(input, environmentFactors)).toBe(0);
+    })
+});
 
