@@ -1,4 +1,5 @@
-const { getYieldForCrop, getYieldForPlant, getTotalYield, getCostsForCrop, getRevenueForCrop, getProfitForCrop } = require("./farm");
+const { getYieldForCrop, getYieldForPlant, getTotalYield, getCostsForCrop, 
+    getRevenueForCrop, getProfitForCrop, getTotalProfit } = require("./farm");
 
 describe("getYieldForPlant", () => {
     const corn = {
@@ -135,5 +136,54 @@ describe("getProfitForCrop", () => {
     });
 });
 
+describe("getTotalProfit", () => {
+    test("Calculate total profit with multiple crops", () => {
+        const corn = {
+            name: "corn",
+            yield: 3,
+        };
+        const pumpkin = {
+            name: "pumpkin",
+            yield: 4,
+        };
+        const crops = [
+            { crop: corn, numCrops: 5 },
+            { crop: pumpkin, numCrops: 2 },
+        ];
+        expect(getTotalProfit({ crops })).toBe(39);
+    });
+
+    test("Calculate total profit with 0 amount", () => {
+        const corn = {
+            name: "corn",
+            yield: 3,
+        };
+        const crops = [{ crop: corn, numCrops: 0 }];
+        expect(getTotalProfit({ crops })).toBe(0);
+    });
+});
+
+// deel 3
+
+describe("getYieldForPlant", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };
+
+    test("Get yield for plant with 'low' sun", () => {
+        const environmentFactors = {
+            sun: "low",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(15);
+    })
+});
 
 
